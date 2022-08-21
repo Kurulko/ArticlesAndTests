@@ -1,0 +1,44 @@
+﻿@model global::Articles.Models.AccountModels.Account
+
+@{
+    Type type = Model.GetType();
+}
+<form method="post" class="form-group">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @foreach (var property in type.GetProperties().OrderBy(p => p.Name))
+    {
+        string name = property.Name;
+        bool isBoolean = property.PropertyType == typeof(bool);
+
+        <p>
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.DisplayName(name)
+                </div>
+                <div class="col-md-4">
+                    @if (!isBoolean)
+                    {
+                        @Html.ValidationMessage(name, new { @class = "text-danger"})
+                    }
+                </div>
+                <div class="col-md-5">
+                    @if(isBoolean)
+                    {
+                        @Html.CheckBox(name)
+                    }
+                    else
+                    {
+                        @Html.Editor(name, new { htmlAttributes =  new{ @class="form-control" } })
+                    }
+                </div>
+            </div>
+        </p>
+    }
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-4">
+            <input type="submit" value="@type.Name" class="btn btn-outline-primary" />
+        </div>
+    </div>
+</form>

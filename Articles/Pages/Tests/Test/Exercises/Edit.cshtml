@@ -1,0 +1,37 @@
+﻿@page
+@model Articles.Pages.Tests.Test.Exercises.EditModel
+@using Articles.Models.ViewModels
+@{
+    ViewData["Title"] = "Edit Exercises";
+}
+
+<a href="/Tests/Test/@Model.Test.Id" class="btn btn-outline-info">
+    Back to test
+</a>
+<br>
+<br>
+<center>
+    <a asp-page="Add" asp-route-testId="@Model.Test.Id" class="btn btn-outline-primary">
+        Add Exercise
+    </a>
+@*    <a href="/Tests/Test/Exercises/Add?id=@Model.Test.Id" class="btn btn-outline-primary">
+        Add Exercise
+    </a>
+*@    <br /><br />
+    @if (Model?.Exercises.Any() ?? false)
+    {
+        <form method="post" class="form-group">
+            @for (int i = 0; i < Model.Exercises.Count; ++i)
+            {
+                <div style="border:solid;">
+                    <h3>№ @(i+1)</h3>
+                    @await Html.PartialAsync("_FormForExercise", new ExerciseAndStartAspFor(Model.Exercises[i], $"Exercises[{i}]"))
+                </div>
+                <br />
+                <br />
+            }
+            <input type="submit" value="Save" class="btn btn-outline-info" />
+        </form>
+    }
+</center>
+

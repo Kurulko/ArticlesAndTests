@@ -1,0 +1,35 @@
+.table-hover > tbody > tr.no-hover:hover {
+    background-color: #ffffff;
+}
+
+.filter {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+body {
+    margin: 0px;
+    font-style: oblique;
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}

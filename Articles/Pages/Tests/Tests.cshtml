@@ -1,0 +1,39 @@
+﻿@page "/Tests"
+@using global::Articles.Models.DbModels
+@model global::Articles.Pages.Tests.TestsModel
+@{
+    ViewData["Title"] = "Tests";
+    IEnumerable<Test> tests = Model.Tests;
+}
+
+@if (User.IsInRole("Admin"))
+{
+    <a href="/Tests/Test/Create" class="btn btn-outline-primary">Create Test</a>
+    <br />
+    <br />
+}
+@if (tests is not null)
+{
+    <center>
+        @foreach (Test test in tests)
+        {
+            <button class="navbar-light box-shadow container" onclick="redirect('/Tests/Test/@test.Id')">
+                <div class="navbar-brand"><h2>@test.Name</h2></div>
+                <div class="row">
+                    <div class="col-md-6"><img src=@test.ImageUrl /></div>
+                    <div class="col-md-4">@test.Description</div>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="col-md-2">
+                            <a href="/Tests/Test/Edit?testId=@(test.Id)" class="btn btn-outline-primary">Edit</a>
+                            <br><br>
+                            <a href="/Tests/Test/Delete?testId=@(test.Id)" class="btn btn-outline-danger">Delete</a>
+                        </div>
+                    }
+                </div>
+            </button>
+            <br />
+            <br />
+        }
+    </center>
+}

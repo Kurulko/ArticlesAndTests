@@ -1,0 +1,41 @@
+﻿@page "/Users"
+@using Articles.Models.ViewModels
+@model Articles.Pages.Users.UsersModel
+@{
+    ViewData["Title"] = "Users";
+}
+
+<center>
+    <h2>Information about user</h2>
+    <hr />
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Date Register</th>
+                <th>Role</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (UserAndRole userAndRole in Model.UsersAndRoles)
+            {
+                <tr>
+                    <td>@userAndRole.User.Id</td>
+                    <td>@userAndRole.User.UserName</td>
+                    <td>@userAndRole.User.Email</td>
+                    <td>@userAndRole.User.DateTime.ToString()</td>
+                    <td>@userAndRole.Role</td>
+                    <td>
+                        <a asp-page="User" asp-page-handler="ById" asp-route-userId="@userAndRole.User.Id" class="btn btn-outline-primary">
+                            Look
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+</center>

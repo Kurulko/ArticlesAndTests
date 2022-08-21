@@ -1,0 +1,21 @@
+﻿@page
+@model Articles.Pages.Tests.Test.Exercises.AddModel
+@using Articles.Models.ViewModels
+@{
+    ViewData["Title"] = "Add Exercise";
+}
+<center>
+    <form method="post" class="form-group">
+        @await Html.PartialAsync("_FormForExercise",new ExerciseAndStartAspFor(Model.Exercise,"Exercise"))
+        <input type="hidden" name="id" value=@Model.Test.Id />
+        <input type="submit" value="Add Exercise" class="btn btn-outline-info" />
+    </form>
+</center>
+<br />
+<a asp-page="Edit" asp-route-testId="@Model.Test.Id" class="btn btn-outline-info">
+    Back to edit exercises
+</a>
+@*<a href="/Tests/Test/Exercises/Edit?id=@Model.Test.Id" class="btn btn-outline-info">
+    Back to edit exercises
+</a>
+*@

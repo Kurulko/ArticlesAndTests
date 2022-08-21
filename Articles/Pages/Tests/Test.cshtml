@@ -1,0 +1,58 @@
+﻿@page "{id:long}"
+@model global::Articles.Pages.Tests.TestModel
+@using Articles.Extensions
+@using global::Articles.Models.DbModels
+
+@{
+    ViewData["Title"] = Model.Test.Name;
+    int testId = Model.Test.Id;
+    var exercises = Model.Test?.Exercises?.GetJumbledCollection().ToList();
+}
+
+<a asp-page="Tests" class="btn btn-outline-info">
+    Back to tests
+</a>
+<br>
+<br>
+@if (User.IsInRole("Admin"))
+{
+    <a href="/Tests/Test/Exercises/Edit?testId=@testId" class="btn btn-outline-info">
+        Edit
+    </a>
+}
+@if (exercises?.Any() ?? false)
+{
+    <center>
+        <form method="post">
+            <input type="hidden" name="id" value=@testId />
+            @for (int i = 0; i < exercises.Count; ++i)
+            {
+                <div class="row exercise">
+                    <h4>№@(i+1). @exercises[i].Question</h4>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        @if (exercises[i]?.Answers is not null)
+                        {
+                            @foreach (Answer answer in exercises[i].Answers.GetJumbledCollection())
+                            {
+                                <div class="col-md-6">
+                                    <label>@answer.Value</label>
+                                    <input type="radio" name="answers[@i]" class="answer" value="@answer.IsCorrect.ToString()" />
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <br />
+            }
+            <br />
+            <h4 id="result"></h4>
+            <button type="button" class="btn btn-outline-info" id="showResult">Result</button>
+            <br /><br />
+            @if (Model.User.Identity?.IsAuthenticated ?? false)
+            {
+                <button type="submit" class="btn btn-outline-info">Save result</button>
+            }
+        </form>
+    </center>
+}

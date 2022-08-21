@@ -1,0 +1,30 @@
+﻿@page
+@model Articles.Pages.Tests.Test.Exercises.Answers.AddModel
+@{
+    ViewData["Title"] = "Add Exercise";
+}
+<center>
+    <form method="post" class="form-group">
+        <input type="hidden" name="testId" value=@Model.Test.Id />
+        <input type="hidden" name="exerciseId" value=@Model.Exercise.Id />
+        <div class="row">
+            <div class="col-md-2">
+                <label asp-for="Answer.Value"></label>
+            </div>
+            <div class="col-md-4">
+                <input asp-for="Answer.Value" class="form-control" />
+            </div>
+            <div class="col-md-2">
+                <label asp-for="Answer.IsCorrect"></label>
+            </div>
+            <div class="col-md-1">
+                <input asp-for="Answer.IsCorrect" />
+            </div>
+            <div class="col-md-2">
+                <span asp-validation-for="Answer.Value" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <input type="submit" value="Add Answer" class="btn btn-outline-info" />
+    </form>
+</center>

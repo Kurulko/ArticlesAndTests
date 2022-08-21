@@ -1,0 +1,64 @@
+﻿@page "/User"
+@model Articles.Pages.Users.UserModel
+@{
+    ViewData["Title"] = "User";
+    User user = Model.UserAndRole.User;
+}
+
+<center>
+    <h2>Information about user</h2>
+    <hr />
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Date Register</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.DateTime.ToString()</td>
+                <td>@Model.UserAndRole.Role</td>
+            </tr>
+        </tbody>
+    </table>
+
+    @{
+        var results = user.ResultsOfTests;
+    }
+
+    @if (results?.Any() ?? false)
+    {
+        <br>
+        <h2>The results of the tests</h2>
+        <br>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Test Name</th>
+                    <th>Result</th>
+                    <th>Date Passed</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach(var result in results)
+            {
+                <tr>
+                    <td>@result.Test.Name</td>
+                    <td>@result.CountOfCorrectAnswers / @(result.Test.Exercises?.Count ?? default)</td>
+                    <td>@result.DateTime.ToString()</td>
+                    <td>
+                        <a href="/Tests/Test/@result.TestId" class="btn btn-primary">go</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    <br />
+</center>

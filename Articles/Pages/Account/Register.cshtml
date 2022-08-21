@@ -1,0 +1,26 @@
+﻿@page 
+@model global::Articles.Pages.Account.RegisterModel
+
+@{
+    string title = "Register";
+    ViewData["Title"] = title;
+}
+<center>
+    <div class="row">
+        <div class="col-md-8">
+            @await Html.PartialAsync("_Account", Model.Register)
+        </div>
+        <div class="col-md-4">
+            <br /><br /><br /><br />
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">Or</div>
+                <div class="col-md-5">
+                    <a class="btn btn-outline-info" asp-page="Login" asp-route-ReturnUrl="@(Model.ReturnUrl)">
+                        Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</center>

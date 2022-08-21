@@ -1,0 +1,90 @@
+﻿@model Articles.Models.ViewModels.ExerciseAndStartAspFor
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-11">
+        <div class="row">
+            @if ((Model.Exercise?.Id ?? 0) != 0)
+            {
+                <div class="col-md-3">
+                    <a asp-page="Delete" asp-route-testId=@Model.Exercise.TestId
+                   asp-route-exerciseId=@Model.Exercise.Id class="btn btn-outline-danger">
+                        Delete Exercise
+                    </a>
+                </div>
+            }
+
+            @{
+                string question = $"{Model.StartAspFor}.Question";
+            }
+            <div class="col-md-2">
+                @Html.DisplayName(question)
+            </div>
+            <div class="col-md-5">
+                <textarea class="form-control" rows="1" name="@question">@Model.Exercise?.Question</textarea>
+            </div>
+            <div class="col-md-3">
+                @Html.ValidationMessage(question, new { @class = "text-danger"})
+            </div>
+            <input type="hidden" value="@Model.Exercise?.Id" name="@(Model.StartAspFor).Id" />
+            <input type="hidden" value="@Model.Exercise?.TestId" name="@(Model.StartAspFor).TestId" />
+        </div>
+        <br />
+        @if (Model.Exercise?.Answers?.Any() ?? false)
+        {
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-11">
+
+                    @for (int i = 0; i < Model.Exercise.Answers.Count; ++i)
+                    {
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a href="/Tests/Test/Exercises/Answers/Delete?testId=@(Model.Exercise.TestId)&answerId=@(Model.Exercise.Answers[i].Id)"
+                           class="btn btn-outline-danger">
+                                    Delete Answer
+                                </a>
+                            </div>
+
+                            @{
+                                string answerValue = $"{Model.StartAspFor}.Answers[{i}].Value";
+                            }
+                            <div class="col-md-2">
+                                @Html.DisplayName(answerValue) №@(i+1)
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="@answerValue" value="@Model.Exercise.Answers[i].Value" class="form-control text-box single-line">
+                            </div>
+                            @{
+                                string answerIsCorrect = $"{Model.StartAspFor}.Answers[{i}].IsCorrect";
+                            }
+                            <div class="col-md-2">
+                                @Html.DisplayName(answerIsCorrect)
+                            </div>
+                            <div class="col-md-1">
+                                <input id="@answerIsCorrect" name="@answerIsCorrect" type="checkbox"
+                               value="true" @((Model?.Exercise?.Answers[i]?.IsCorrect ?? false) ? "checked" : "") />
+                            </div>
+                            <div class="col-md-2">
+                                @Html.ValidationMessage(answerValue, new { @class = "text-danger"})
+                            </div>
+                            <input type="hidden" value="@Model.Exercise.Answers[i].Id" name="@(Model.StartAspFor).Answers[@(i)].Id" />
+                            <input type="hidden" value="@Model.Exercise.Id" name="@(Model.StartAspFor).Answers[@(i)].ExerciseId" />
+                        </div>
+                        <br>
+                    }
+                </div>
+            </div>
+        }
+
+        @if ((Model.Exercise?.Id ?? 0) != 0)
+        {
+            <a href="/Tests/Test/Exercises/Answers/Add?testId=@(Model.Exercise.TestId)&exerciseId=@(Model.Exercise.Id)"
+           class="btn btn-outline-primary">
+            Add Answer
+        </a>
+        }
+        <br><br>
+    </div>
+</div>
+

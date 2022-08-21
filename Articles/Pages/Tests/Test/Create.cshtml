@@ -1,0 +1,16 @@
+﻿@page 
+@model Articles.Pages.Tests.CreateModel
+
+@{
+    string title = "Create Test";
+    ViewData["Title"] = title;
+}
+
+<center>
+    <h1>@title</h1>
+    <hr />
+    @await Html.PartialAsync("_FormForTest", Model.Test)
+</center>
+<br />
+<a href="/Tests" class="btn btn-primary">Back to Tests</a>
+

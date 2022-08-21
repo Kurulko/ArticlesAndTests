@@ -1,0 +1,74 @@
+﻿@page "/Articles"
+@using global::Articles.Models.ArticleModels
+@model global::Articles.Pages.Articles.ArticlesModel
+@{
+    ViewData["Title"] = "Articles";
+}
+
+<form method="get" class="form-group">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+            <input name="theme" class="form-control" placeholder="Theme" />
+        </div>
+        <div class="col-md-3">
+            <select name="languages" multiple size=2 class="form-control">
+                <option disabled>Choose language</option>
+                @foreach (Language language in Enum.GetValues<Language>())
+                {
+                    <option value=@language>@language.ToStringFullLanguage()</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-outline-primary">Search</button>
+        </div>
+    </div>
+</form>
+@{
+    News? news = Model.News;
+}
+@if (news?.Articles is not null)
+{
+    <br />
+    <br />
+    @if (news.TotalResults != 0)
+    {
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Language</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Article article in news.Articles)
+                {
+                    <tr>
+                        <td>@article.Title</td>
+                        <td rowspan=2>@article.Date</td>
+                        <td rowspan=2>@article.Language</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <details>
+                                <h6><strong>@article.Description</strong></h6>
+                                <p>@article.Content</p>
+                            </details>
+                        </td>
+                    </tr>
+                    <tr class="no-hover">
+                        <td colspan=3>
+                            <br>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <center><h3>No results were found for this query.</h3></center>
+    }
+}

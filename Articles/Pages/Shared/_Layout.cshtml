@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Articles.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <div class="navbar-light border-bottom box-shadow">
+            <div class="container row">
+                <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <a class="navbar-brand" href="/">Home</a>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-1">
+                            <a class="navbar-brand" href="/Articles">Articles</a>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-1">
+                            <a class="navbar-brand" href="/Tests">Tests</a>
+                        </div>
+                    </div>
+                </div>
+                @{
+                    string fontSize = "24px";
+                }
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    <div class="col-md-4"></div>
+                    <div class="col-md-3">
+                        <a class="navbar-brand" href="/Account/Logout"><i class="fa fa-sign-out" style="font-size:@fontSize;"></i></a>
+                        <a class="navbar-brand" href="/User"><i class="fa fa-user" style="font-size:@fontSize;"></i></a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="navbar-brand" href="/Users"><i class="fa fa-users" style="font-size:@fontSize;"></i></a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-6"></div>
+                    <div class="col-md-1">
+                        <a class="navbar-brand col-md-1" href="/Account/Login"><i class="fa fa-sign-in" style="font-size:@fontSize;"></i></a>
+                    </div>
+                }
+            </div>
+        </div>
+    </header>
+    <br />
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - Articles
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/test.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
