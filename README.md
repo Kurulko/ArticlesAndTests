@@ -1,0 +1,2 @@
+# Articles and Tests
+The site where you can follow the latest world news in different languages can also take tests that this website provides, and if you're a registered user, you can save the results to be displayed in your personal account. And if you're a site administrator, you can edit tests, that is, add tests, edit the test itself, its tasks and values, and you can also view all users and their test results
